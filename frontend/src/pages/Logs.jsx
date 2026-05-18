@@ -86,18 +86,18 @@ export default function Logs() {
   return (
     <div className="p-4 lg:p-6 space-y-4 h-[calc(100vh-4rem)] flex flex-col">
       {/* Controls bar */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 flex-shrink-0">
+      <div className="flex flex-wrap items-center gap-2 sm:gap-3 flex-shrink-0">
         {/* Service selector */}
-        <div className="relative">
+        <div className="relative w-full sm:w-auto">
           <button
             onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white hover:bg-gray-50 text-gray-700 text-sm transition-colors min-w-[200px] justify-between border border-gray-200 shadow-sm"
+            className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg bg-white hover:bg-gray-50 text-gray-700 text-sm transition-colors w-full sm:min-w-[200px] justify-between border border-gray-200 shadow-sm min-h-[44px]"
           >
-            <span className="flex items-center gap-2">
-              <ScrollText className="w-4 h-4 text-indigo-500" />
+            <span className="flex items-center gap-2 truncate">
+              <ScrollText className="w-4 h-4 text-indigo-500 flex-shrink-0" />
               {selectedService || '选择服务'}
             </span>
-            <ChevronDown className="w-4 h-4 text-gray-400" />
+            <ChevronDown className="w-4 h-4 text-gray-400 flex-shrink-0" />
           </button>
           {dropdownOpen && (
             <>
@@ -111,7 +111,7 @@ export default function Logs() {
                       setDropdownOpen(false)
                     }}
                     className={cn(
-                      'w-full text-left px-4 py-2 text-sm transition-colors',
+                      'w-full text-left px-4 py-2.5 sm:py-2 text-sm transition-colors min-h-[44px] sm:min-h-0',
                       s === selectedService
                         ? 'bg-indigo-50 text-indigo-600'
                         : 'text-gray-600 hover:bg-gray-50'
@@ -130,7 +130,7 @@ export default function Logs() {
           <button
             onClick={() => setLogType('out')}
             className={cn(
-              'px-3 py-1.5 rounded-md text-xs font-medium transition-colors',
+              'px-3 py-2 sm:py-1.5 rounded-md text-xs font-medium transition-colors min-h-[36px] sm:min-h-0',
               logType === 'out'
                 ? 'bg-white text-indigo-600 shadow-sm'
                 : 'text-gray-500 hover:text-gray-700'
@@ -141,7 +141,7 @@ export default function Logs() {
           <button
             onClick={() => setLogType('error')}
             className={cn(
-              'px-3 py-1.5 rounded-md text-xs font-medium transition-colors',
+              'px-3 py-2 sm:py-1.5 rounded-md text-xs font-medium transition-colors min-h-[36px] sm:min-h-0',
               logType === 'error'
                 ? 'bg-white text-red-500 shadow-sm'
                 : 'text-gray-500 hover:text-gray-700'
@@ -155,41 +155,42 @@ export default function Logs() {
         <button
           onClick={() => setAutoRefresh(!autoRefresh)}
           className={cn(
-            'flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition-colors',
+            'flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-2 rounded-lg text-xs font-medium transition-colors min-h-[36px]',
             autoRefresh
               ? 'bg-emerald-50 text-emerald-600 border border-emerald-200'
               : 'bg-white text-gray-500 hover:text-gray-700 border border-gray-200'
           )}
         >
           {autoRefresh ? <Play className="w-3.5 h-3.5" /> : <Pause className="w-3.5 h-3.5" />}
-          {autoRefresh ? '自动刷新中' : '自动刷新'}
+          <span className="hidden sm:inline">{autoRefresh ? '自动刷新中' : '自动刷新'}</span>
+          <span className="sm:hidden">{autoRefresh ? '自动' : '刷新'}</span>
         </button>
 
         {/* Manual refresh */}
         <button
           onClick={fetchLogs}
-          className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white hover:bg-gray-50 text-gray-600 text-xs transition-colors border border-gray-200"
+          className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-2 rounded-lg bg-white hover:bg-gray-50 text-gray-600 text-xs transition-colors border border-gray-200 min-h-[36px]"
         >
           <RefreshCw className={cn('w-3.5 h-3.5', loading && 'animate-spin')} />
-          刷新
+          <span className="hidden sm:inline">刷新</span>
         </button>
 
         {/* Stats */}
-        <div className="flex items-center gap-3 ml-auto text-xs text-gray-400">
+        <div className="flex items-center gap-2 sm:gap-3 sm:ml-auto text-[10px] sm:text-xs text-gray-400">
           {errorCount > 0 && (
             <span className="flex items-center gap-1 text-red-500">
-              <XCircle className="w-3.5 h-3.5" />
-              {errorCount} 错误
+              <XCircle className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+              {errorCount}
             </span>
           )}
           {warnCount > 0 && (
             <span className="flex items-center gap-1 text-amber-500">
-              <AlertTriangle className="w-3.5 h-3.5" />
-              {warnCount} 警告
+              <AlertTriangle className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+              {warnCount}
             </span>
           )}
           {logMeta && (
-            <span>显示 {logMeta.showing} / {logMeta.total} 行</span>
+            <span className="hidden sm:inline">显示 {logMeta.showing} / {logMeta.total} 行</span>
           )}
         </div>
       </div>
@@ -208,7 +209,7 @@ export default function Logs() {
             </span>
           )}
         </div>
-        <div className="flex-1 overflow-auto p-4 min-h-0 bg-gray-50/50">
+        <div className="flex-1 overflow-auto p-2 sm:p-4 min-h-0 bg-gray-50/50">
           {loading && lines.length === 0 ? (
             <div className="flex items-center justify-center py-12">
               <div className="flex flex-col items-center gap-2">
@@ -224,19 +225,19 @@ export default function Logs() {
               </div>
             </div>
           ) : (
-            <div className="font-mono text-xs leading-5">
+            <div className="font-mono text-[10px] sm:text-xs leading-4 sm:leading-5">
               {lines.map((line, i) => {
                 const type = classifyLine(line)
                 return (
                   <div
                     key={i}
                     className={cn(
-                      'flex gap-3 hover:bg-gray-100/70 px-2 py-0.5 rounded',
+                      'flex gap-1.5 sm:gap-3 hover:bg-gray-100/70 px-1 sm:px-2 py-0.5 rounded',
                       type === 'error' && 'bg-red-50/70',
                       type === 'warning' && 'bg-amber-50/70'
                     )}
                   >
-                    <span className="text-gray-300 select-none w-8 text-right flex-shrink-0">
+                    <span className="text-gray-300 select-none w-6 sm:w-8 text-right flex-shrink-0">
                       {logMeta ? logMeta.total - logMeta.showing + i + 1 : i + 1}
                     </span>
                     <span className={cn(

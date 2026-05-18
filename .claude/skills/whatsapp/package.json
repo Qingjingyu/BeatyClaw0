@@ -1,0 +1,26 @@
+{
+  "name": "zylos-whatsapp",
+  "version": "0.1.0",
+  "description": "WhatsApp Business communication channel for Zylos agents - Cloud API webhook",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --test \"src/**/*.test.js\""
+  },
+  "keywords": [
+    "zylos",
+    "whatsapp",
+    "agent",
+    "webhook",
+    "cloud-api"
+  ],
+  "author": "Zylos AI",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  }
+}

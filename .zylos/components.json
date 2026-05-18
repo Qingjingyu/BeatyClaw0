@@ -17,5 +17,61 @@
     "installedAt": "2026-05-18T09:09:28.767Z",
     "skillDir": "/home/cocoai/zylos/.claude/skills/wechat",
     "dataDir": "/home/cocoai/zylos/components/wechat"
+  },
+  "dingtalk": {
+    "version": "0.1.0",
+    "type": "declarative",
+    "isThirdParty": false,
+    "installedAt": "2026-05-19T08:30:00Z",
+    "skillDir": "/home/cocoai/zylos/.claude/skills/dingtalk",
+    "dataDir": "/home/cocoai/zylos/components/dingtalk"
+  },
+  "telegram": {
+    "version": "0.1.0",
+    "type": "declarative",
+    "isThirdParty": false,
+    "installedAt": "2026-05-19T09:00:00Z",
+    "skillDir": "/home/cocoai/zylos/.claude/skills/telegram",
+    "dataDir": "/home/cocoai/zylos/components/telegram"
+  },
+  "lark": {
+    "version": "0.1.0",
+    "type": "declarative",
+    "isThirdParty": false,
+    "installedAt": "2026-05-19T09:00:00Z",
+    "skillDir": "/home/cocoai/zylos/.claude/skills/lark",
+    "dataDir": "/home/cocoai/zylos/components/lark"
+  },
+  "discord": {
+    "version": "0.1.0",
+    "type": "declarative",
+    "isThirdParty": false,
+    "installedAt": "2026-05-19T09:30:00Z",
+    "skillDir": "/home/cocoai/zylos/.claude/skills/discord",
+    "dataDir": "/home/cocoai/zylos/components/discord"
+  },
+  "slack": {
+    "version": "0.1.0",
+    "type": "declarative",
+    "isThirdParty": false,
+    "installedAt": "2026-05-19T09:30:00Z",
+    "skillDir": "/home/cocoai/zylos/.claude/skills/slack",
+    "dataDir": "/home/cocoai/zylos/components/slack"
+  },
+  "whatsapp": {
+    "version": "0.1.0",
+    "type": "declarative",
+    "isThirdParty": false,
+    "installedAt": "2026-05-19T09:30:00Z",
+    "skillDir": "/home/cocoai/zylos/.claude/skills/whatsapp",
+    "dataDir": "/home/cocoai/zylos/components/whatsapp"
+  },
+  "email": {
+    "version": "0.1.0",
+    "type": "declarative",
+    "isThirdParty": false,
+    "installedAt": "2026-05-19T09:30:00Z",
+    "skillDir": "/home/cocoai/zylos/.claude/skills/email",
+    "dataDir": "/home/cocoai/zylos/components/email"
   }
 }

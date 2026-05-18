@@ -14,6 +14,7 @@ import {
   Zap,
   Menu,
   X,
+  Sparkles,
 } from 'lucide-react'
 import { cn } from '../lib/utils'
 import { useApi } from '../hooks/useApi'
@@ -22,6 +23,7 @@ const navItems = [
   { to: '/', icon: LayoutDashboard, label: '仪表盘', labelEn: 'Dashboard' },
   { to: '/chat', icon: MessageSquare, label: '对话', labelEn: 'Chat' },
   { to: '/roles', icon: Users, label: '角色', labelEn: 'Roles' },
+  { to: '/skills', icon: Sparkles, label: '技能', labelEn: 'Skills' },
   { to: '/channels', icon: Radio, label: '频道', labelEn: 'Channels' },
   { to: '/tasks', icon: CalendarClock, label: '任务', labelEn: 'Tasks' },
   { to: '/memory', icon: Brain, label: '记忆', labelEn: 'Memory' },
@@ -35,7 +37,7 @@ export default function Layout() {
   const location = useLocation()
   const { data: status } = useApi('/api/status', 10000)
 
-  const aiOnline = status?.services?.some(s => s.name === 'activity-monitor' && s.status === 'online')
+  const aiOnline = status?.services?.some(s => s.status === 'online')
 
   const currentPage = navItems.find(item => item.to === location.pathname) || navItems[0]
 
@@ -67,8 +69,8 @@ export default function Layout() {
           </div>
           {!collapsed && (
             <div className="overflow-hidden">
-              <h1 className="text-lg font-bold text-gray-900 tracking-tight">Zylos</h1>
-              <p className="text-[10px] text-gray-400 -mt-0.5">AI Digital Employee</p>
+              <h1 className="text-lg font-bold text-gray-900 tracking-tight">BeatyClaw</h1>
+              <p className="text-[10px] text-gray-400 -mt-0.5">数字员工</p>
             </div>
           )}
         </div>
@@ -124,14 +126,14 @@ export default function Layout() {
             </div>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             {/* AI Status indicator */}
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-50 border border-gray-200">
+            <div className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 rounded-full bg-gray-50 border border-gray-200">
               <div className={cn(
                 'w-2 h-2 rounded-full',
                 aiOnline !== false ? 'bg-emerald-500 animate-pulse-dot' : 'bg-red-400'
               )} />
-              <span className="text-xs font-medium text-gray-600">
+              <span className="text-xs font-medium text-gray-600 hidden sm:inline">
                 {aiOnline !== false ? 'AI 在线' : 'AI 离线'}
               </span>
             </div>

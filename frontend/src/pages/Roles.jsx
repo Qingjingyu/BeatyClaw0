@@ -19,11 +19,13 @@ import {
   Settings,
   Layers,
   CheckCircle2,
-  ArrowRight,
   Loader2,
   Sparkles,
   Timer,
   Radio,
+  Plus,
+  Minus,
+  X,
 } from 'lucide-react'
 
 const iconMap = {
@@ -80,36 +82,36 @@ const borderColorMap = {
   'foundation': 'border-gray-200 hover:border-gray-400',
 }
 
-function RoleCard({ role, isActive, onSwitch, switching }) {
+function RoleCard({ role, isLearned, onToggle, toggling }) {
   const Icon = iconMap[role.id] || Bot
   const gradient = colorMap[role.id] || 'from-slate-500 to-slate-700'
   const borderColor = borderColorMap[role.id] || 'border-gray-200 hover:border-gray-400'
 
   return (
     <div className={cn(
-      'rounded-xl border bg-white shadow-sm p-5 transition-all duration-300 hover:shadow-md group',
-      isActive ? 'ring-2 ring-indigo-500 border-indigo-300' : borderColor,
+      'rounded-xl border bg-white shadow-sm p-4 sm:p-5 transition-all duration-300 hover:shadow-md group',
+      isLearned ? 'ring-2 ring-indigo-500 border-indigo-300' : borderColor,
     )}>
-      <div className="flex items-start justify-between mb-4">
+      <div className="flex items-start justify-between mb-3 sm:mb-4">
         <div className={cn(
-          'w-12 h-12 rounded-xl bg-gradient-to-br flex items-center justify-center shadow-md',
+          'w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br flex items-center justify-center shadow-md',
           gradient
         )}>
-          <Icon className="w-6 h-6 text-white" />
+          <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
         </div>
-        {isActive && (
-          <span className="flex items-center gap-1 text-xs font-medium text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-full">
+        {isLearned && (
+          <span className="flex items-center gap-1 text-[10px] sm:text-xs font-medium text-indigo-600 bg-indigo-50 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full">
             <CheckCircle2 className="w-3 h-3" />
-            当前角色
+            已学习
           </span>
         )}
       </div>
 
-      <h3 className="text-base font-semibold text-gray-900 mb-1">
+      <h3 className="text-sm sm:text-base font-semibold text-gray-900 mb-1">
         {role.name_zh || role.name}
       </h3>
-      <p className="text-xs text-gray-400 mb-3">{role.name}</p>
-      <p className="text-sm text-gray-500 leading-relaxed mb-4 line-clamp-2">
+      <p className="text-[10px] sm:text-xs text-gray-400 mb-2 sm:mb-3">{role.name}</p>
+      <p className="text-xs sm:text-sm text-gray-500 leading-relaxed mb-3 sm:mb-4 line-clamp-2">
         {role.tagline_zh || role.tagline}
       </p>
 
@@ -133,62 +135,73 @@ function RoleCard({ role, isActive, onSwitch, switching }) {
       </div>
 
       {/* Suitable for */}
-      <p className="text-xs text-gray-400 mb-4">
+      <p className="text-[10px] sm:text-xs text-gray-400 mb-3 sm:mb-4">
         {role.suitable_for_zh || role.suitable_for}
       </p>
 
-      {!isActive && (
-        <button
-          onClick={() => onSwitch(role.id)}
-          disabled={switching}
-          className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-gray-50 hover:bg-indigo-600 text-gray-500 hover:text-white text-sm font-medium transition-all duration-200 border border-gray-200 hover:border-indigo-600 group-hover:bg-indigo-600 group-hover:text-white group-hover:border-indigo-600"
-        >
-          {switching ? (
-            <>
-              <Loader2 className="w-4 h-4 animate-spin" />
-              切换中...
-            </>
-          ) : (
-            <>
-              <Sparkles className="w-4 h-4" />
-              切换角色
-              <ArrowRight className="w-3 h-3 opacity-0 -ml-2 group-hover:opacity-100 group-hover:ml-0 transition-all" />
-            </>
-          )}
-        </button>
-      )}
+      <button
+        onClick={() => onToggle(role.id)}
+        disabled={toggling}
+        className={cn(
+          'w-full flex items-center justify-center gap-2 py-2.5 min-h-[44px] rounded-lg text-sm font-medium transition-all duration-200 border',
+          isLearned
+            ? 'bg-red-50 hover:bg-red-100 text-red-600 border-red-200 hover:border-red-300'
+            : 'bg-gray-50 hover:bg-indigo-600 text-gray-500 hover:text-white border-gray-200 hover:border-indigo-600 group-hover:bg-indigo-600 group-hover:text-white group-hover:border-indigo-600',
+        )}
+      >
+        {toggling ? (
+          <>
+            <Loader2 className="w-4 h-4 animate-spin" />
+            处理中...
+          </>
+        ) : isLearned ? (
+          <>
+            <Minus className="w-4 h-4" />
+            移除角色
+          </>
+        ) : (
+          <>
+            <Plus className="w-4 h-4" />
+            学习角色
+          </>
+        )}
+      </button>
     </div>
   )
 }
 
 export default function Roles() {
-  const { data, loading } = useApi('/api/roles')
-  const [switchingId, setSwitchingId] = useState(null)
-  const [activeRole, setActiveRole] = useState(null)
+  const { data, loading, refetch } = useApi('/api/roles')
+  const [togglingId, setTogglingId] = useState(null)
+  const [localActiveRoles, setLocalActiveRoles] = useState(null)
   const [searchQuery, setSearchQuery] = useState('')
+  const [filter, setFilter] = useState('all')
 
   const roles = data?.roles || []
-  const currentActive = activeRole || data?.activeRole || 'general-assistant'
+  const activeRoles = localActiveRoles || data?.activeRoles || []
 
-  async function handleSwitch(roleId) {
-    setSwitchingId(roleId)
+  async function handleToggle(roleId) {
+    setTogglingId(roleId)
     try {
-      const res = await fetch('/api/roles/switch', {
+      const res = await fetch('/api/roles/toggle', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ roleId }),
       })
       if (res.ok) {
-        setActiveRole(roleId)
+        const result = await res.json()
+        setLocalActiveRoles(result.activeRoles)
       }
     } catch (err) {
-      console.error('Failed to switch role:', err)
+      console.error('Failed to toggle role:', err)
     } finally {
-      setSwitchingId(null)
+      setTogglingId(null)
     }
   }
 
   const filteredRoles = roles.filter(r => {
+    if (filter === 'learned' && !activeRoles.includes(r.id)) return false
+    if (filter === 'available' && activeRoles.includes(r.id)) return false
     if (!searchQuery) return true
     const q = searchQuery.toLowerCase()
     return (
@@ -199,13 +212,17 @@ export default function Roles() {
     )
   })
 
+  const learnedCount = activeRoles.length
+
   return (
     <div className="p-4 lg:p-6 space-y-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-lg font-semibold text-gray-900">专家角色</h2>
-          <p className="text-sm text-gray-500">共 {roles.length} 个角色可用，点击切换 AI 的工作模式</p>
+          <p className="text-sm text-gray-500">
+            共 {roles.length} 个角色 · 已学习 {learnedCount} 个 · 添加角色后 AI 将拥有对应技能
+          </p>
         </div>
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -216,7 +233,43 @@ export default function Roles() {
             placeholder="搜索角色..."
             className="pl-9 pr-4 py-2 rounded-lg bg-white border border-gray-200 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 w-full sm:w-64 shadow-sm"
           />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery('')}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          )}
         </div>
+      </div>
+
+      {/* Filter tabs */}
+      <div className="flex items-center gap-2">
+        {[
+          { id: 'all', label: '全部', count: roles.length },
+          { id: 'learned', label: '已学习', count: learnedCount },
+          { id: 'available', label: '未学习', count: roles.length - learnedCount },
+        ].map(f => (
+          <button
+            key={f.id}
+            onClick={() => setFilter(f.id)}
+            className={cn(
+              'px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200',
+              filter === f.id
+                ? 'bg-white shadow-sm border border-indigo-200 text-indigo-600'
+                : 'text-gray-500 hover:text-gray-700 hover:bg-white/60',
+            )}
+          >
+            {f.label}
+            <span className={cn(
+              'ml-1.5 px-1.5 py-0.5 rounded-full text-[10px] font-medium',
+              filter === f.id ? 'bg-indigo-50 text-indigo-600' : 'bg-gray-100 text-gray-400',
+            )}>
+              {f.count}
+            </span>
+          </button>
+        ))}
       </div>
 
       {/* Role grid */}
@@ -233,9 +286,9 @@ export default function Roles() {
             <RoleCard
               key={role.id}
               role={role}
-              isActive={role.id === currentActive}
-              onSwitch={handleSwitch}
-              switching={switchingId === role.id}
+              isLearned={activeRoles.includes(role.id)}
+              onToggle={handleToggle}
+              toggling={togglingId === role.id}
             />
           ))}
           {filteredRoles.length === 0 && (

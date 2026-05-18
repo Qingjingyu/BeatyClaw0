@@ -1,0 +1,27 @@
+{
+  "name": "zylos-slack",
+  "version": "0.1.0",
+  "description": "Slack communication channel for Zylos agents - Socket Mode WebSocket",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --test \"src/**/*.test.js\""
+  },
+  "keywords": [
+    "zylos",
+    "slack",
+    "agent",
+    "websocket",
+    "socket-mode"
+  ],
+  "author": "Zylos AI",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "ws": "^8.18.0"
+  }
+}

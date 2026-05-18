@@ -1,0 +1,20 @@
+{
+  "enabled": true,
+  "internal_port": 4460,
+  "owner": {
+    "bound": false,
+    "staff_id": "",
+    "name": ""
+  },
+  "dmPolicy": "owner",
+  "dmAllowFrom": [],
+  "groupPolicy": "allowlist",
+  "groups": {},
+  "message": {
+    "context_messages": 10
+  },
+  "ws": {
+    "reconnect_initial_delay": 1000,
+    "reconnect_max_delay": 30000
+  }
+}

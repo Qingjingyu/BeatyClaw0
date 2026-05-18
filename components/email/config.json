@@ -1,0 +1,21 @@
+{
+  "enabled": true,
+  "internal_port": 4467,
+  "owner": {
+    "bound": false,
+    "email": "",
+    "name": ""
+  },
+  "dmPolicy": "owner",
+  "dmAllowFrom": [],
+  "polling": {
+    "interval": 30000,
+    "mailbox": "INBOX"
+  },
+  "message": {
+    "context_messages": 5
+  },
+  "smtp": {
+    "reply_prefix": "Re: "
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "enabled": true,
+  "internal_port": 4461,
+  "owner": {
+    "bound": false,
+    "chat_id": "",
+    "username": "",
+    "name": ""
+  },
+  "dmPolicy": "owner",
+  "dmAllowFrom": [],
+  "groupPolicy": "allowlist",
+  "groups": {},
+  "message": {
+    "context_messages": 10
+  },
+  "polling": {
+    "timeout": 30,
+    "retry_delay": 5000
+  }
+}

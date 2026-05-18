@@ -73,19 +73,20 @@ function ConversationItem({ conv, active, onClick, onDelete }) {
 }
 
 export default function Chat() {
-  const [conversations, setConversations] = useState([
-    { id: 'default', title: '新对话', messages: [] }
-  ])
-  const [activeConvId, setActiveConvId] = useState('default')
+  const [conversations, setConversations] = useState([])
+  const [activeConvId, setActiveConvId] = useState(null)
+  const [messages, setMessages] = useState([])
   const [input, setInput] = useState('')
   const [isConnected, setIsConnected] = useState(false)
   const [isTyping, setIsTyping] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth >= 768)
   const messagesEndRef = useRef(null)
   const wsRef = useRef(null)
   const inputRef = useRef(null)
+  const activeConvIdRef = useRef(null)
 
-  const activeConv = conversations.find(c => c.id === activeConvId) || conversations[0]
+  const activeConv = conversations.find(c => c.id === activeConvId)
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -93,7 +94,52 @@ export default function Chat() {
 
   useEffect(() => {
     scrollToBottom()
-  }, [activeConv?.messages?.length, scrollToBottom])
+  }, [messages.length, scrollToBottom])
+
+  useEffect(() => {
+    activeConvIdRef.current = activeConvId
+  }, [activeConvId])
+
+  // Load conversations from server on mount
+  useEffect(() => {
+    async function loadConversations() {
+      try {
+        const res = await fetch('/api/chat/conversations')
+        const data = await res.json()
+        const convs = data.conversations || []
+        if (convs.length > 0) {
+          setConversations(convs)
+          setActiveConvId(convs[0].id)
+        } else {
+          await createNewConversation()
+        }
+      } catch {
+        await createNewConversation()
+      }
+      setLoading(false)
+    }
+    loadConversations()
+  }, [])
+
+  // Load messages when active conversation changes
+  useEffect(() => {
+    if (!activeConvId) return
+    async function loadMessages() {
+      try {
+        const res = await fetch(`/api/chat/conversations/${activeConvId}/messages`)
+        const data = await res.json()
+        const msgs = (data.messages || []).map(m => ({
+          role: m.role,
+          content: m.content,
+          time: new Date(m.created_at + 'Z').toLocaleTimeString('zh-CN'),
+        }))
+        setMessages(msgs)
+      } catch {
+        setMessages([])
+      }
+    }
+    loadMessages()
+  }, [activeConvId])
 
   // WebSocket connection
   useEffect(() => {
@@ -101,9 +147,7 @@ export default function Chat() {
       const proto = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
       const ws = new WebSocket(`${proto}//${window.location.host}/ws`)
 
-      ws.onopen = () => {
-        setIsConnected(true)
-      }
+      ws.onopen = () => setIsConnected(true)
 
       ws.onmessage = (event) => {
         try {
@@ -112,39 +156,41 @@ export default function Chat() {
             const content = data.content || data.message || data.text || ''
             if (content) {
               setIsTyping(false)
-              setConversations(prev => prev.map(c => {
-                if (c.id === activeConvId) {
-                  return {
-                    ...c,
-                    messages: [...c.messages, {
-                      role: 'assistant',
-                      content,
-                      time: new Date().toLocaleTimeString('zh-CN'),
-                    }]
-                  }
-                }
-                return c
-              }))
+              const botMsg = {
+                role: 'assistant',
+                content,
+                time: new Date().toLocaleTimeString('zh-CN'),
+              }
+              setMessages(prev => [...prev, botMsg])
+              // Save to server
+              const convId = activeConvIdRef.current
+              if (convId) {
+                fetch(`/api/chat/conversations/${convId}/messages`, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ role: 'assistant', content }),
+                }).catch(() => {})
+              }
             }
           }
         } catch {
-          // Plain text response
           const content = event.data
           if (content && content.trim()) {
             setIsTyping(false)
-            setConversations(prev => prev.map(c => {
-              if (c.id === activeConvId) {
-                return {
-                  ...c,
-                  messages: [...c.messages, {
-                    role: 'assistant',
-                    content,
-                    time: new Date().toLocaleTimeString('zh-CN'),
-                  }]
-                }
-              }
-              return c
-            }))
+            const botMsg = {
+              role: 'assistant',
+              content,
+              time: new Date().toLocaleTimeString('zh-CN'),
+            }
+            setMessages(prev => [...prev, botMsg])
+            const convId = activeConvIdRef.current
+            if (convId) {
+              fetch(`/api/chat/conversations/${convId}/messages`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ role: 'assistant', content }),
+              }).catch(() => {})
+            }
           }
         }
       }
@@ -154,24 +200,48 @@ export default function Chat() {
         setTimeout(connect, 3000)
       }
 
-      ws.onerror = () => {
-        setIsConnected(false)
-      }
+      ws.onerror = () => setIsConnected(false)
 
       wsRef.current = ws
     }
 
     connect()
     return () => {
-      if (wsRef.current) {
-        wsRef.current.close()
-      }
+      if (wsRef.current) wsRef.current.close()
     }
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [])
 
-  function sendMessage() {
+  async function createNewConversation() {
+    try {
+      const res = await fetch('/api/chat/conversations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: '新对话' }),
+      })
+      const data = await res.json()
+      const newConv = { id: data.id, title: data.title, message_count: 0 }
+      setConversations(prev => [newConv, ...prev])
+      setActiveConvId(data.id)
+      setMessages([])
+      return data.id
+    } catch {
+      const id = 'conv-' + Date.now()
+      const newConv = { id, title: '新对话', message_count: 0 }
+      setConversations(prev => [newConv, ...prev])
+      setActiveConvId(id)
+      setMessages([])
+      return id
+    }
+  }
+
+  async function sendMessage() {
     const text = input.trim()
     if (!text) return
+
+    let convId = activeConvId
+    if (!convId) {
+      convId = await createNewConversation()
+    }
 
     const userMsg = {
       role: 'user',
@@ -179,40 +249,62 @@ export default function Chat() {
       time: new Date().toLocaleTimeString('zh-CN'),
     }
 
-    setConversations(prev => prev.map(c => {
-      if (c.id === activeConvId) {
-        const newTitle = c.messages.length === 0 ? text.slice(0, 30) : c.title
-        return { ...c, title: newTitle, messages: [...c.messages, userMsg] }
-      }
-      return c
-    }))
-
+    setMessages(prev => [...prev, userMsg])
     setInput('')
     setIsTyping(true)
 
+    // Update conversation title if first message
+    if (messages.length === 0) {
+      setConversations(prev => prev.map(c =>
+        c.id === convId ? { ...c, title: text.slice(0, 30) } : c
+      ))
+    }
+
+    // Save user message to server
+    fetch(`/api/chat/conversations/${convId}/messages`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ role: 'user', content: text }),
+    }).catch(() => {})
+
+    // Send via WebSocket for streaming
     if (wsRef.current?.readyState === WebSocket.OPEN) {
-      wsRef.current.send(JSON.stringify({
-        type: 'message',
-        content: text,
-      }))
+      wsRef.current.send(JSON.stringify({ type: 'message', content: text }))
     } else {
-      // Simulate response if not connected
-      setTimeout(() => {
+      // Fallback to REST
+      try {
+        const allMsgs = [...messages, userMsg]
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            messages: allMsgs.map(m => ({ role: m.role, content: m.content })),
+            conversationId: convId,
+          }),
+        })
+        const data = await res.json()
         setIsTyping(false)
-        setConversations(prev => prev.map(c => {
-          if (c.id === activeConvId) {
-            return {
-              ...c,
-              messages: [...c.messages, {
-                role: 'assistant',
-                content: '当前未连接到后端服务。请确保 API 服务器正在运行（端口 3001）。',
-                time: new Date().toLocaleTimeString('zh-CN'),
-              }]
-            }
+        if (data.content) {
+          const botMsg = {
+            role: 'assistant',
+            content: data.content,
+            time: new Date().toLocaleTimeString('zh-CN'),
           }
-          return c
-        }))
-      }, 500)
+          setMessages(prev => [...prev, botMsg])
+          fetch(`/api/chat/conversations/${convId}/messages`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ role: 'assistant', content: data.content }),
+          }).catch(() => {})
+        }
+      } catch (err) {
+        setIsTyping(false)
+        setMessages(prev => [...prev, {
+          role: 'assistant',
+          content: '连接失败，请稍后重试。',
+          time: new Date().toLocaleTimeString('zh-CN'),
+        }])
+      }
     }
 
     inputRef.current?.focus()
@@ -225,28 +317,31 @@ export default function Chat() {
     }
   }
 
-  function newConversation() {
-    const id = `conv-${Date.now()}`
-    setConversations(prev => [...prev, { id, title: '新对话', messages: [] }])
-    setActiveConvId(id)
-  }
-
-  function deleteConversation(id) {
+  async function deleteConversation(id) {
+    fetch(`/api/chat/conversations/${id}`, { method: 'DELETE' }).catch(() => {})
     setConversations(prev => {
       const next = prev.filter(c => c.id !== id)
-      if (next.length === 0) {
-        next.push({ id: 'default', title: '新对话', messages: [] })
-      }
       if (activeConvId === id) {
-        setActiveConvId(next[next.length - 1].id)
+        if (next.length > 0) {
+          setActiveConvId(next[0].id)
+        } else {
+          createNewConversation()
+        }
       }
       return next
     })
   }
 
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <Loader2 className="w-6 h-6 text-indigo-500 animate-spin" />
+      </div>
+    )
+  }
+
   return (
     <div className="flex h-full relative">
-      {/* Mobile overlay for sidebar */}
       {sidebarOpen && (
         <div
           className="fixed inset-0 bg-black/20 z-30 md:hidden"
@@ -262,7 +357,7 @@ export default function Chat() {
       )}>
         <div className="p-3 border-b border-gray-200">
           <button
-            onClick={newConversation}
+            onClick={createNewConversation}
             className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium transition-colors min-h-[44px]"
           >
             <Plus className="w-4 h-4" />
@@ -284,7 +379,6 @@ export default function Chat() {
 
       {/* Chat area */}
       <div className="flex-1 flex flex-col min-w-0 bg-white">
-        {/* Chat header */}
         <div className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 border-b border-gray-200">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -293,9 +387,9 @@ export default function Chat() {
             <ChevronLeft className={cn('w-4 h-4 transition-transform', !sidebarOpen && 'rotate-180')} />
           </button>
           <div className="flex-1 min-w-0">
-            <h3 className="text-sm font-medium text-gray-900 truncate">{activeConv.title}</h3>
+            <h3 className="text-sm font-medium text-gray-900 truncate">{activeConv?.title || '新对话'}</h3>
             <p className="text-[11px] text-gray-400">
-              {activeConv.messages.length} 条消息
+              {messages.length} 条消息
             </p>
           </div>
           <div className="flex items-center gap-1.5 sm:gap-2">
@@ -311,18 +405,18 @@ export default function Chat() {
 
         {/* Messages */}
         <div className="flex-1 overflow-y-auto px-3 sm:px-4 py-4 sm:py-6 space-y-4 sm:space-y-6 bg-gray-50/50">
-          {activeConv.messages.length === 0 && (
+          {messages.length === 0 && (
             <div className="flex flex-col items-center justify-center h-full text-center">
               <div className="w-16 h-16 rounded-2xl bg-indigo-50 flex items-center justify-center mb-4">
                 <Bot className="w-8 h-8 text-indigo-500" />
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Zylos AI</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">BeatyClaw 数字员工</h3>
               <p className="text-sm text-gray-500 max-w-md">
-                你好！我是你的 AI 数字员工。你可以向我提问、分配任务，或者让我帮你完成工作。
+                你好！我是你的 BeatyClaw 数字员工。你可以向我提问、分配任务，或者让我帮你完成工作。
               </p>
             </div>
           )}
-          {activeConv.messages.map((msg, i) => (
+          {messages.map((msg, i) => (
             <ChatMessage key={i} message={msg} />
           ))}
           {isTyping && (

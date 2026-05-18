@@ -26,13 +26,13 @@ function SectionCard({ icon: Icon, title, children, color = 'indigo' }) {
 
   return (
     <div className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
-      <div className="px-6 py-4 border-b border-gray-100">
+      <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-100">
         <h3 className="text-sm font-semibold text-gray-900 flex items-center gap-2">
           <Icon className={cn('w-4 h-4', colorMap[color])} />
           {title}
         </h3>
       </div>
-      <div className="px-6 py-4 space-y-3">
+      <div className="px-4 sm:px-6 py-3 sm:py-4 space-y-2 sm:space-y-3">
         {children}
       </div>
     </div>
@@ -41,14 +41,14 @@ function SectionCard({ icon: Icon, title, children, color = 'indigo' }) {
 
 function InfoRow({ label, value, icon: Icon, mono = false }) {
   return (
-    <div className="flex items-center justify-between py-1.5">
-      <span className="text-sm text-gray-500 flex items-center gap-2">
-        {Icon && <Icon className="w-3.5 h-3.5" />}
+    <div className="flex items-center justify-between gap-2 py-1.5">
+      <span className="text-xs sm:text-sm text-gray-500 flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+        {Icon && <Icon className="w-3 h-3 sm:w-3.5 sm:h-3.5" />}
         {label}
       </span>
       <span className={cn(
-        'text-sm text-gray-700',
-        mono && 'font-mono bg-gray-50 px-2 py-0.5 rounded text-xs border border-gray-100'
+        'text-xs sm:text-sm text-gray-700 truncate max-w-[55%] sm:max-w-none text-right',
+        mono && 'font-mono bg-gray-50 px-1.5 sm:px-2 py-0.5 rounded text-[10px] sm:text-xs border border-gray-100'
       )}>
         {value || '-'}
       </span>
@@ -103,7 +103,7 @@ export default function Settings() {
             <InfoRow icon={Cpu} label="操作系统" value={system.platform} />
             <InfoRow icon={Clock} label="运行时间" value={system.uptime} />
             <InfoRow icon={Terminal} label="Node 版本" value={system.nodeVersion} mono />
-            <InfoRow icon={Box} label="Zylos 版本" value={system.zylosVersion} mono />
+            <InfoRow icon={Box} label="BeatyClaw 版本" value={system.zylosVersion} mono />
           </SectionCard>
 
           {/* Environment */}
@@ -180,9 +180,9 @@ export default function Settings() {
       )}
 
       {/* Footer note */}
-      <div className="rounded-xl border border-gray-200 bg-white shadow-sm px-6 py-4">
-        <div className="flex items-center gap-2 text-xs text-gray-400">
-          <SettingsIcon className="w-3.5 h-3.5" />
+      <div className="rounded-xl border border-gray-200 bg-white shadow-sm px-4 sm:px-6 py-3 sm:py-4">
+        <div className="flex items-start sm:items-center gap-2 text-[10px] sm:text-xs text-gray-400">
+          <SettingsIcon className="w-3.5 h-3.5 flex-shrink-0 mt-0.5 sm:mt-0" />
           <span>系统设置为只读模式，如需修改请通过命令行操作。数据每 30 秒自动刷新。</span>
         </div>
       </div>
