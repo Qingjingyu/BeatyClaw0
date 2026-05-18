@@ -1,0 +1,15 @@
+{
+  "role_id": "product-manager",
+  "role_name": "Product Manager",
+  "role_name_zh": "产品经理",
+  "activated_at": null,
+  "pm_config": {
+    "prioritization_framework": "RICE",
+    "roadmap_horizon": "quarterly",
+    "team_size": null,
+    "story_format": "given_when_then",
+    "templates_used": []
+  },
+  "prd_history": [],
+  "onboarding_complete": false
+}

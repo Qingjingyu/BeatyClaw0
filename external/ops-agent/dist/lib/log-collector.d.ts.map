@@ -1,0 +1,1 @@
+{"version":3,"file":"log-collector.d.ts","sourceRoot":"","sources":["../../src/lib/log-collector.ts"],"names":[],"mappings":"AASA,MAAM,WAAW,iBAAiB;IAChC,SAAS,EAAE,MAAM,CAAC;IAClB,KAAK,EAAE,MAAM,CAAC;IACd,OAAO,EAAE,MAAM,CAAC;IAChB,MAAM,EAAE,MAAM,CAAC;CAChB;AAED;;;GAGG;AACH,wBAAsB,iBAAiB,CAAC,UAAU,GAAE,MAAW,GAAG,OAAO,CAAC,iBAAiB,EAAE,CAAC,CAmG7F"}

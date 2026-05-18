@@ -1,0 +1,15 @@
+{
+  "role_id": "seo-strategist",
+  "required_tools": ["WebSearch"],
+  "recommended_tools": ["WebFetch", "Read"],
+  "optional_tools": ["Bash"],
+  "tool_permissions": {
+    "web_search": true,
+    "file_read": true,
+    "bash_execution": false,
+    "network_access": true,
+    "scheduler_create": false,
+    "channel_push": false
+  },
+  "notes": "Web search is essential for keyword research, SERP analysis, and competitive intelligence. WebFetch enables crawling specific pages for on-page analysis."
+}

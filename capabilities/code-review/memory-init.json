@@ -1,0 +1,14 @@
+{
+  "role_id": "code-review",
+  "role_name": "Code Review Expert",
+  "role_name_zh": "代码审查专家",
+  "activated_at": null,
+  "review_config": {
+    "preferred_languages": [],
+    "security_level": "high",
+    "style_guide": "community_standard",
+    "severity_labels": ["blocking", "should_fix", "suggestion", "nit"]
+  },
+  "review_history": [],
+  "onboarding_complete": false
+}

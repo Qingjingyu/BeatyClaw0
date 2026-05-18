@@ -1,0 +1,19 @@
+{
+  "role_id": "social-media",
+  "required_tools": ["WebSearch"],
+  "recommended_tools": ["lark", "telegram", "scheduler"],
+  "tool_permissions": {
+    "web_search": true,
+    "file_read": false,
+    "bash_execution": false,
+    "network_access": true,
+    "channel_push": true,
+    "scheduler_create": true
+  },
+  "scheduler_config": {
+    "optional_cron": "0 9 * * 1",
+    "task_name": "social-media-weekly-content-brief",
+    "requires_setup_on_first_use": false
+  },
+  "notes": "Primary tool is WebSearch for trend research. Channel push is recommended for delivering content drafts directly to user's working channels. Scheduler is optional for weekly content planning reminders."
+}

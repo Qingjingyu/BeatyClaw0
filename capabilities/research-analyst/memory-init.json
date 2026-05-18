@@ -1,0 +1,15 @@
+{
+  "role_id": "research-analyst",
+  "role_name": "Research Analyst",
+  "role_name_zh": "研究分析师",
+  "activated_at": null,
+  "research_config": {
+    "depth": "thorough",
+    "output_language": "auto",
+    "citation_format": "inline_url_date",
+    "confidence_levels": ["confirmed", "high_confidence", "speculative", "unverified"],
+    "source_hierarchy": ["primary", "peer_reviewed", "reputable_journalism", "community", "blog"]
+  },
+  "research_history": [],
+  "onboarding_complete": false
+}

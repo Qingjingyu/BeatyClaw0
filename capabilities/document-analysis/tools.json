@@ -1,0 +1,16 @@
+{
+  "role_id": "document-analysis",
+  "required_tools": ["Read"],
+  "recommended_tools": ["WebSearch", "Write"],
+  "optional_tools": ["lark", "telegram"],
+  "tool_permissions": {
+    "web_search": true,
+    "file_read": true,
+    "file_write": true,
+    "bash_execution": false,
+    "network_access": true,
+    "channel_push": false,
+    "scheduler_create": false
+  },
+  "notes": "File read is the PRIMARY tool — this role is document-first. WebSearch is secondary (for cross-referencing, regulations lookup). No scheduler needed; purely reactive to user document uploads."
+}

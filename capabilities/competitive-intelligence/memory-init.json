@@ -1,0 +1,16 @@
+{
+  "role_id": "competitive-intelligence",
+  "role_name": "Competitive Intelligence Analyst",
+  "role_name_zh": "竞品情报分析师",
+  "activated_at": null,
+  "monitoring_config": {
+    "competitors": [],
+    "monitor_frequency": "weekly_monday_0900",
+    "output_channel": "web_console",
+    "last_monitor_run": null,
+    "next_monitor_run": null
+  },
+  "analysis_history": [],
+  "scheduler_task_id": null,
+  "onboarding_complete": false
+}

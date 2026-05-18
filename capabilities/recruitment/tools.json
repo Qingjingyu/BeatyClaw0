@@ -1,0 +1,16 @@
+{
+  "role_id": "recruitment",
+  "required_tools": ["WebSearch", "Read"],
+  "recommended_tools": ["lark", "telegram"],
+  "optional_tools": ["scheduler"],
+  "tool_permissions": {
+    "web_search": true,
+    "file_read": true,
+    "file_write": true,
+    "bash_execution": false,
+    "network_access": true,
+    "channel_push": true,
+    "scheduler_create": false
+  },
+  "notes": "File read is REQUIRED for resume parsing. WebSearch is REQUIRED for salary market research and JD benchmarking. Channel push recommended for sharing evaluation reports with hiring team."
+}

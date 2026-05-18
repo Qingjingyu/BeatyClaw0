@@ -1,0 +1,13 @@
+{
+  "role_id": "document-analysis",
+  "role_name": "Document Analysis Assistant",
+  "role_name_zh": "文档分析助手",
+  "activated_at": null,
+  "preferences": {
+    "default_output_format": "structured",
+    "risk_classification": true,
+    "always_cite_sources": true,
+    "language": "auto"
+  },
+  "documents_analyzed_count": 0
+}

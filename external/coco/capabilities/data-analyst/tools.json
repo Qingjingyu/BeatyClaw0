@@ -1,0 +1,15 @@
+{
+  "role_id": "data-analyst",
+  "required_tools": ["Read", "Bash"],
+  "recommended_tools": ["Glob", "Grep"],
+  "optional_tools": ["WebSearch", "WebFetch"],
+  "tool_permissions": {
+    "web_search": true,
+    "file_read": true,
+    "bash_execution": true,
+    "network_access": true,
+    "scheduler_create": false,
+    "channel_push": false
+  },
+  "notes": "Bash with Python/pandas is core for data manipulation and analysis. File read handles CSV/JSON/Excel uploads. Web search supports methodology and documentation lookup."
+}

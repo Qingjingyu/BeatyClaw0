@@ -1,0 +1,23 @@
+{
+  "role_id": "contract-review",
+  "role_name": "Contract Review Specialist",
+  "role_name_zh": "合同审查专家",
+  "activated_at": null,
+  "review_config": {
+    "jurisdiction": null,
+    "contract_types": [],
+    "language": "auto",
+    "risk_framework": [
+      "party_scope",
+      "financial",
+      "ip_ownership",
+      "liability",
+      "termination",
+      "confidentiality",
+      "dispute",
+      "missing_protections"
+    ]
+  },
+  "review_history": [],
+  "onboarding_complete": false
+}

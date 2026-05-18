@@ -1,0 +1,18 @@
+{
+  "role_id": "social-media",
+  "role_name": "Social Media Content Specialist",
+  "role_name_zh": "社媒内容专家",
+  "activated_at": null,
+  "preferences": {
+    "preferred_platforms": ["xiaohongshu", "weibo"],
+    "content_tone": "professional_friendly",
+    "output_language": "zh-CN",
+    "always_provide_ab_titles": true
+  },
+  "brand_context": {
+    "brand_keywords": [],
+    "brand_voice": null,
+    "avoid_topics": []
+  },
+  "content_history_count": 0
+}

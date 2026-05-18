@@ -1,0 +1,15 @@
+{
+  "role_id": "product-manager",
+  "required_tools": ["Read"],
+  "recommended_tools": ["WebSearch", "Write"],
+  "optional_tools": ["WebFetch", "Bash"],
+  "tool_permissions": {
+    "web_search": true,
+    "file_read": true,
+    "bash_execution": false,
+    "network_access": true,
+    "scheduler_create": false,
+    "channel_push": false
+  },
+  "notes": "File read for uploaded specs, requirements, and competitor data. Web search for market research and competitive analysis to inform product decisions."
+}

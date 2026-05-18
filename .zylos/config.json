@@ -1,0 +1,5 @@
+{
+  "runtime": "claude",
+  "new_session_threshold": 70,
+  "codex_new_session_threshold": 75
+}

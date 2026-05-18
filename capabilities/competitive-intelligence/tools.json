@@ -1,0 +1,20 @@
+{
+  "role_id": "competitive-intelligence",
+  "required_tools": ["WebSearch", "scheduler", "lark", "telegram"],
+  "recommended_tools": ["Read"],
+  "optional_tools": ["WebFetch"],
+  "tool_permissions": {
+    "web_search": true,
+    "file_read": true,
+    "bash_execution": true,
+    "network_access": true,
+    "scheduler_create": true,
+    "channel_push": true
+  },
+  "scheduler_config": {
+    "default_cron": "0 9 * * 1",
+    "task_name": "competitive-intelligence-weekly-report",
+    "requires_setup_on_first_use": true
+  },
+  "notes": "Scheduler and channel push (connect component) are REQUIRED for the monitoring use case. Without scheduler, role degrades to on-demand analysis only."
+}

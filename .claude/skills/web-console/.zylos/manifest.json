@@ -1,0 +1,14 @@
+{
+  "files": {
+    "SKILL.md": "7a1e3400b875e2845521acd187c0164f5494e0349b55b61d284fb2bd48ee066a",
+    "package-lock.json": "704f825d6b5d0b899d4cce34696e396f946634b19470e5d73e298d191e947994",
+    "package.json": "62873894ef93362cdfbf1c22d718718805910cf2ebce754dccf40104bac4d842",
+    "public/app.js": "d73fca09680d9047a53f582cb9ee6c70ff37405b20fe0318949b79727157125f",
+    "public/index.html": "4f695ea32c622b88474bdb69bada00cf31edfd1e38b04842a44cb88bdbfa899f",
+    "public/logo.png": "61a66d9eb279ed56c6324ee33b0965286939764d9f61ea11988764386cae533e",
+    "public/styles.css": "a1469e443a017e4dea849a673e4350bb3a763021e7b76ed9594360dab955e2aa",
+    "scripts/send.js": "50c3d652c2a9740c35618744d904a7146b691ce46a06559c0945d68fbe0489a9",
+    "scripts/server.js": "26e3bed5055452c4cdb0e930e0dd62dbaeef0f032f23cef1d51fe6c2c4cfd27b"
+  },
+  "generated_at": "2026-05-18T08:58:46.646Z"
+}

@@ -1,0 +1,41 @@
+# === Secrets & Credentials ===
+.env
+.env.*
+*.token
+.admin-token
+
+# === Runtime Data (regenerated automatically) ===
+*.db
+*.db-shm
+*.db-wal
+*.log
+*.jsonl
+
+# === Runtime State Files ===
+activity-monitor/*.json
+scheduler/*.json
+components/wechat/accounts/*.json
+components/wechat/accounts/*.sync.json
+components/wechat/accounts/*.runtime.json
+components/wechat/context-tokens.json
+components/wechat/accounts.json
+components/wechat/login-sessions/
+components/wechat/media/
+components/wecom/media/
+
+# === Dependencies ===
+node_modules/
+
+# === OS & Editor ===
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# === Locks ===
+.zylos/locks/
+
+# === Logs Directory ===
+logs/
+components/*/logs/

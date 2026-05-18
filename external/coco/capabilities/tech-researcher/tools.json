@@ -1,0 +1,15 @@
+{
+  "role_id": "tech-researcher",
+  "required_tools": ["WebSearch"],
+  "recommended_tools": ["WebFetch", "Read", "Bash"],
+  "optional_tools": [],
+  "tool_permissions": {
+    "web_search": true,
+    "file_read": true,
+    "bash_execution": true,
+    "network_access": true,
+    "scheduler_create": false,
+    "channel_push": false
+  },
+  "notes": "WebSearch is the primary research tool. WebFetch for fetching documentation, changelogs, and benchmark pages. Bash enables running quick proof-of-concept experiments if needed."
+}

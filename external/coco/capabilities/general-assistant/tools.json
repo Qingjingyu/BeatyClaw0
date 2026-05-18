@@ -1,0 +1,13 @@
+{
+  "role_id": "general-assistant",
+  "required_tools": ["WebSearch", "Read", "Write", "Bash"],
+  "recommended_tools": ["scheduler"],
+  "tool_permissions": {
+    "web_search": true,
+    "file_read": true,
+    "file_write": true,
+    "bash_execution": true,
+    "network_access": true
+  },
+  "notes": "General assistant uses all standard Claude Code tools. Scheduler is optional, enabled on user request."
+}

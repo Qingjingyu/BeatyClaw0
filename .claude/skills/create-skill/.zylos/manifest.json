@@ -1,0 +1,12 @@
+{
+  "files": {
+    "LICENSE.txt": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
+    "SKILL.md": "9f7d89ba982e4325516a7dd50457d1b1f0d0ea26ba95af1ad63bcfbada9ee4c7",
+    "package.json": "3ca9d4afd21425087cf31893b8f9f63c81b0b8408db5e343ca76e5f8aa26ab9a",
+    "references/output-patterns.md": "d6027800b9d8c26589edba85b42901a41ac36d753b4e9cebc7f4cbb03cdcf0a4",
+    "references/workflows.md": "ef4846877d5dab47511a01a6cf31476ad64f5bc5945635459295794575338980",
+    "scripts/init-skill.js": "781b4fe16ca44edf913d8dd67d90e3c7a9055e53a1f1a65b2e348faa56b583f6",
+    "scripts/validate.js": "dc0067a1d3e228a9f2454b1e851276244f342311608a89379efbb69076e01b81"
+  },
+  "generated_at": "2026-05-18T08:58:46.638Z"
+}

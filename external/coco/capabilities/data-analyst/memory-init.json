@@ -1,0 +1,14 @@
+{
+  "role_id": "data-analyst",
+  "role_name": "Data Analyst",
+  "role_name_zh": "数据分析师",
+  "activated_at": null,
+  "analysis_config": {
+    "preferred_language": "python",
+    "significance_threshold": 0.05,
+    "output_format": "structured_markdown_with_code",
+    "analysis_types": ["eda", "statistical_testing", "cohort", "ab_test", "sql"]
+  },
+  "analysis_history": [],
+  "onboarding_complete": false
+}

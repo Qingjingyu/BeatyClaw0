@@ -1,0 +1,9 @@
+{
+  "files": {
+    "Caddyfile.template": "0de28914a7ed894dffb7b298570b2c845f5c1fdf5126b9e488f68501db8b5686",
+    "SKILL.md": "e66ff6356adac07cef3823988bfa40755ab5242723041eeacc8b9f32b5c04032",
+    "package.json": "1239d4d885dcad42201a27ed9324f8f0f760b78700d8db9ced39a511cffe7eae",
+    "scripts/setup-caddy.js": "100c1596de06dbce36f4a27a9505c12abf7366488a354270f8fdcf62ba495cba"
+  },
+  "generated_at": "2026-05-18T08:58:46.639Z"
+}

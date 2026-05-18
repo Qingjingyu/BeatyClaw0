@@ -1,0 +1,21 @@
+{
+  "role_id": "financial-analyst",
+  "role_name": "Financial Analyst",
+  "role_name_zh": "财务分析师",
+  "activated_at": null,
+  "analysis_config": {
+    "default_currency": "auto",
+    "accounting_standard": "auto",
+    "peer_set": [],
+    "analysis_dimensions": [
+      "revenue_quality",
+      "profitability",
+      "cash_generation",
+      "balance_sheet",
+      "efficiency",
+      "valuation"
+    ]
+  },
+  "analysis_history": [],
+  "onboarding_complete": false
+}

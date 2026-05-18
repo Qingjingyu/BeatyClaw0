@@ -1,0 +1,15 @@
+{
+  "role_id": "financial-analyst",
+  "required_tools": ["Read"],
+  "recommended_tools": ["WebSearch", "Bash"],
+  "optional_tools": ["WebFetch"],
+  "tool_permissions": {
+    "web_search": true,
+    "file_read": true,
+    "bash_execution": true,
+    "network_access": true,
+    "scheduler_create": false,
+    "channel_push": false
+  },
+  "notes": "File read for financial document upload (Excel, PDF, CSV). Bash enables Python calculations. Web search for peer benchmarks and market data."
+}

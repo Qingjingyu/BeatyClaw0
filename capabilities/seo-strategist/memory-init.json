@@ -1,0 +1,15 @@
+{
+  "role_id": "seo-strategist",
+  "role_name": "SEO Strategist",
+  "role_name_zh": "SEO 策略师",
+  "activated_at": null,
+  "strategy_config": {
+    "target_market": null,
+    "search_engine": "google",
+    "industry": null,
+    "tracked_keywords": [],
+    "target_domains": []
+  },
+  "research_history": [],
+  "onboarding_complete": false
+}

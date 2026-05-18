@@ -1,0 +1,15 @@
+{
+  "role_id": "code-review",
+  "required_tools": ["Read", "Bash"],
+  "recommended_tools": ["Glob", "Grep", "WebSearch"],
+  "optional_tools": ["WebFetch"],
+  "tool_permissions": {
+    "web_search": true,
+    "file_read": true,
+    "bash_execution": true,
+    "network_access": true,
+    "scheduler_create": false,
+    "channel_push": false
+  },
+  "notes": "File read and bash execution are required for inline code analysis. Web search enables looking up CVEs, language specs, and best practice references."
+}

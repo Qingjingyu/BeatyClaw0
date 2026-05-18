@@ -1,0 +1,21 @@
+{
+  "role_id": "tech-researcher",
+  "role_name": "Tech Researcher",
+  "role_name_zh": "技术研究员",
+  "activated_at": null,
+  "research_config": {
+    "depth": "thorough",
+    "existing_stack": [],
+    "evaluation_dimensions": [
+      "performance",
+      "scalability",
+      "cost",
+      "developer_experience",
+      "ecosystem",
+      "maturity",
+      "vendor_risk"
+    ]
+  },
+  "research_history": [],
+  "onboarding_complete": false
+}

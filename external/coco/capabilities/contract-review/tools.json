@@ -1,0 +1,15 @@
+{
+  "role_id": "contract-review",
+  "required_tools": ["Read"],
+  "recommended_tools": ["WebSearch"],
+  "optional_tools": ["WebFetch", "Bash"],
+  "tool_permissions": {
+    "web_search": true,
+    "file_read": true,
+    "bash_execution": false,
+    "network_access": true,
+    "scheduler_create": false,
+    "channel_push": false
+  },
+  "notes": "File read is essential for uploaded contract documents. Web search supports jurisdiction-specific legal reference lookup."
+}

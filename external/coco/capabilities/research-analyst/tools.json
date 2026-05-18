@@ -1,0 +1,15 @@
+{
+  "role_id": "research-analyst",
+  "required_tools": ["WebSearch"],
+  "recommended_tools": ["WebFetch", "Read"],
+  "optional_tools": ["Bash"],
+  "tool_permissions": {
+    "web_search": true,
+    "file_read": true,
+    "bash_execution": false,
+    "network_access": true,
+    "scheduler_create": false,
+    "channel_push": false
+  },
+  "notes": "WebSearch is the primary tool — 3+ search rounds per research task. WebFetch for retrieving full document content from URLs. File read for uploaded research materials."
+}

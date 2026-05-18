@@ -1,0 +1,16 @@
+{
+  "role_id": "general-assistant",
+  "role_name": "General Assistant",
+  "role_name_zh": "通用助手",
+  "activated_at": null,
+  "preferences": {
+    "output_language": "auto",
+    "response_length": "adaptive",
+    "proactive_suggestions": true
+  },
+  "user_context": {
+    "name": null,
+    "industry": null,
+    "common_tasks": []
+  }
+}

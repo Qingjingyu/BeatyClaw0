@@ -1,0 +1,15 @@
+#!/bin/sh
+# voice-asr: transcribe audio to text via Whisper
+# Usage: transcribe <audio_file>
+# Checks plan-based feature flag before running.
+
+FEATURES_FILE="${HOME}/zylos/.features.json"
+if [ -f "$FEATURES_FILE" ]; then
+  ENABLED=$(python3 -c "import json,sys;print(json.load(open('$FEATURES_FILE')).get('features',{}).get('voiceAsr',False))" 2>/dev/null || echo "False")
+  if [ "$ENABLED" != "True" ]; then
+    echo "Voice ASR is not included in your current plan. Upgrade to Pro or Ultra to unlock this feature." >&2
+    exit 1
+  fi
+fi
+
+exec python3 /opt/coco/voice-asr/transcribe.py "$@"

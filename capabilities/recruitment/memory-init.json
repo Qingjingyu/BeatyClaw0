@@ -1,0 +1,14 @@
+{
+  "role_id": "recruitment",
+  "role_name": "Recruitment Assistant",
+  "role_name_zh": "招聘助手",
+  "activated_at": null,
+  "company_context": {
+    "company_size": null,
+    "industry": null,
+    "hiring_location": null,
+    "company_stage": null
+  },
+  "active_positions": [],
+  "evaluation_count": 0
+}

@@ -1,0 +1,23 @@
+{
+  "name": "@coco/ops-agent",
+  "version": "0.3.39",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "type-check": "tsc --noEmit",
+    "test": "vitest run",
+    "package": "bash scripts/build-package.sh"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3",
+    "vitest": "^4.0.18"
+  }
+}
