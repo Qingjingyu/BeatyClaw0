@@ -5,6 +5,10 @@ import {
   MessageSquare,
   Users,
   Radio,
+  CalendarClock,
+  Brain,
+  ScrollText,
+  Settings,
   ChevronLeft,
   ChevronRight,
   Zap,
@@ -19,6 +23,10 @@ const navItems = [
   { to: '/chat', icon: MessageSquare, label: '对话', labelEn: 'Chat' },
   { to: '/roles', icon: Users, label: '角色', labelEn: 'Roles' },
   { to: '/channels', icon: Radio, label: '频道', labelEn: 'Channels' },
+  { to: '/tasks', icon: CalendarClock, label: '任务', labelEn: 'Tasks' },
+  { to: '/memory', icon: Brain, label: '记忆', labelEn: 'Memory' },
+  { to: '/logs', icon: ScrollText, label: '日志', labelEn: 'Logs' },
+  { to: '/settings', icon: Settings, label: '设置', labelEn: 'Settings' },
 ]
 
 export default function Layout() {
