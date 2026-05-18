@@ -91,18 +91,18 @@ export default function Logs() {
         <div className="relative">
           <button
             onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm transition-colors min-w-[200px] justify-between"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white hover:bg-gray-50 text-gray-700 text-sm transition-colors min-w-[200px] justify-between border border-gray-200 shadow-sm"
           >
             <span className="flex items-center gap-2">
-              <ScrollText className="w-4 h-4 text-indigo-400" />
+              <ScrollText className="w-4 h-4 text-indigo-500" />
               {selectedService || '选择服务'}
             </span>
-            <ChevronDown className="w-4 h-4 text-slate-400" />
+            <ChevronDown className="w-4 h-4 text-gray-400" />
           </button>
           {dropdownOpen && (
             <>
               <div className="fixed inset-0 z-10" onClick={() => setDropdownOpen(false)} />
-              <div className="absolute top-full left-0 mt-1 w-full bg-slate-800 border border-slate-700 rounded-lg shadow-xl z-20 max-h-64 overflow-y-auto">
+              <div className="absolute top-full left-0 mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-20 max-h-64 overflow-y-auto">
                 {services.map(s => (
                   <button
                     key={s}
@@ -113,8 +113,8 @@ export default function Logs() {
                     className={cn(
                       'w-full text-left px-4 py-2 text-sm transition-colors',
                       s === selectedService
-                        ? 'bg-indigo-500/15 text-indigo-400'
-                        : 'text-slate-300 hover:bg-slate-700'
+                        ? 'bg-indigo-50 text-indigo-600'
+                        : 'text-gray-600 hover:bg-gray-50'
                     )}
                   >
                     {s}
@@ -126,14 +126,14 @@ export default function Logs() {
         </div>
 
         {/* Log type toggle */}
-        <div className="flex items-center rounded-lg bg-slate-800 p-0.5">
+        <div className="flex items-center rounded-lg bg-gray-100 p-0.5">
           <button
             onClick={() => setLogType('out')}
             className={cn(
               'px-3 py-1.5 rounded-md text-xs font-medium transition-colors',
               logType === 'out'
-                ? 'bg-indigo-500/20 text-indigo-400'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-white text-indigo-600 shadow-sm'
+                : 'text-gray-500 hover:text-gray-700'
             )}
           >
             stdout
@@ -143,8 +143,8 @@ export default function Logs() {
             className={cn(
               'px-3 py-1.5 rounded-md text-xs font-medium transition-colors',
               logType === 'error'
-                ? 'bg-red-500/20 text-red-400'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-white text-red-500 shadow-sm'
+                : 'text-gray-500 hover:text-gray-700'
             )}
           >
             stderr
@@ -157,8 +157,8 @@ export default function Logs() {
           className={cn(
             'flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition-colors',
             autoRefresh
-              ? 'bg-emerald-500/15 text-emerald-400'
-              : 'bg-slate-800 text-slate-400 hover:text-slate-200'
+              ? 'bg-emerald-50 text-emerald-600 border border-emerald-200'
+              : 'bg-white text-gray-500 hover:text-gray-700 border border-gray-200'
           )}
         >
           {autoRefresh ? <Play className="w-3.5 h-3.5" /> : <Pause className="w-3.5 h-3.5" />}
@@ -168,22 +168,22 @@ export default function Logs() {
         {/* Manual refresh */}
         <button
           onClick={fetchLogs}
-          className="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs transition-colors"
+          className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white hover:bg-gray-50 text-gray-600 text-xs transition-colors border border-gray-200"
         >
           <RefreshCw className={cn('w-3.5 h-3.5', loading && 'animate-spin')} />
           刷新
         </button>
 
         {/* Stats */}
-        <div className="flex items-center gap-3 ml-auto text-xs text-slate-500">
+        <div className="flex items-center gap-3 ml-auto text-xs text-gray-400">
           {errorCount > 0 && (
-            <span className="flex items-center gap-1 text-red-400">
+            <span className="flex items-center gap-1 text-red-500">
               <XCircle className="w-3.5 h-3.5" />
               {errorCount} 错误
             </span>
           )}
           {warnCount > 0 && (
-            <span className="flex items-center gap-1 text-amber-400">
+            <span className="flex items-center gap-1 text-amber-500">
               <AlertTriangle className="w-3.5 h-3.5" />
               {warnCount} 警告
             </span>
@@ -195,31 +195,31 @@ export default function Logs() {
       </div>
 
       {/* Log output */}
-      <div className="flex-1 rounded-xl border border-slate-800/50 bg-slate-950/80 overflow-hidden flex flex-col min-h-0">
-        <div className="px-4 py-2 border-b border-slate-800/50 flex items-center justify-between flex-shrink-0">
-          <div className="flex items-center gap-2 text-xs text-slate-500">
+      <div className="flex-1 rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden flex flex-col min-h-0">
+        <div className="px-4 py-2 border-b border-gray-100 flex items-center justify-between flex-shrink-0 bg-gray-50">
+          <div className="flex items-center gap-2 text-xs text-gray-400">
             <FileText className="w-3.5 h-3.5" />
             <span className="font-mono">{selectedService}-{logType}.log</span>
           </div>
           {autoRefresh && (
-            <span className="text-xs text-emerald-400 flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="text-xs text-emerald-500 flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
               实时
             </span>
           )}
         </div>
-        <div className="flex-1 overflow-auto p-4 min-h-0">
+        <div className="flex-1 overflow-auto p-4 min-h-0 bg-gray-50/50">
           {loading && lines.length === 0 ? (
             <div className="flex items-center justify-center py-12">
               <div className="flex flex-col items-center gap-2">
                 <div className="w-6 h-6 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
-                <span className="text-sm text-slate-400">加载日志...</span>
+                <span className="text-sm text-gray-400">加载日志...</span>
               </div>
             </div>
           ) : lines.length === 0 ? (
-            <div className="flex items-center justify-center py-12 text-slate-500">
+            <div className="flex items-center justify-center py-12 text-gray-400">
               <div className="flex flex-col items-center gap-3">
-                <AlertCircle className="w-8 h-8 text-slate-600" />
+                <AlertCircle className="w-8 h-8 text-gray-300" />
                 <span className="text-sm">暂无日志</span>
               </div>
             </div>
@@ -231,19 +231,19 @@ export default function Logs() {
                   <div
                     key={i}
                     className={cn(
-                      'flex gap-3 hover:bg-slate-800/30 px-2 py-0.5 rounded',
-                      type === 'error' && 'bg-red-500/5',
-                      type === 'warning' && 'bg-amber-500/5'
+                      'flex gap-3 hover:bg-gray-100/70 px-2 py-0.5 rounded',
+                      type === 'error' && 'bg-red-50/70',
+                      type === 'warning' && 'bg-amber-50/70'
                     )}
                   >
-                    <span className="text-slate-600 select-none w-8 text-right flex-shrink-0">
+                    <span className="text-gray-300 select-none w-8 text-right flex-shrink-0">
                       {logMeta ? logMeta.total - logMeta.showing + i + 1 : i + 1}
                     </span>
                     <span className={cn(
                       'break-all',
-                      type === 'error' ? 'text-red-400' :
-                      type === 'warning' ? 'text-amber-400' :
-                      'text-slate-300'
+                      type === 'error' ? 'text-red-600' :
+                      type === 'warning' ? 'text-amber-600' :
+                      'text-gray-600'
                     )}>
                       {line}
                     </span>

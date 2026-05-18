@@ -18,16 +18,16 @@ import {
 
 function SectionCard({ icon: Icon, title, children, color = 'indigo' }) {
   const colorMap = {
-    indigo: 'text-indigo-400',
-    emerald: 'text-emerald-400',
-    violet: 'text-violet-400',
-    amber: 'text-amber-400',
+    indigo: 'text-indigo-500',
+    emerald: 'text-emerald-500',
+    violet: 'text-violet-500',
+    amber: 'text-amber-500',
   }
 
   return (
-    <div className="rounded-xl border border-slate-800/50 bg-slate-900/50 overflow-hidden">
-      <div className="px-6 py-4 border-b border-slate-800/50">
-        <h3 className="text-sm font-semibold text-white flex items-center gap-2">
+    <div className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+      <div className="px-6 py-4 border-b border-gray-100">
+        <h3 className="text-sm font-semibold text-gray-900 flex items-center gap-2">
           <Icon className={cn('w-4 h-4', colorMap[color])} />
           {title}
         </h3>
@@ -42,13 +42,13 @@ function SectionCard({ icon: Icon, title, children, color = 'indigo' }) {
 function InfoRow({ label, value, icon: Icon, mono = false }) {
   return (
     <div className="flex items-center justify-between py-1.5">
-      <span className="text-sm text-slate-400 flex items-center gap-2">
+      <span className="text-sm text-gray-500 flex items-center gap-2">
         {Icon && <Icon className="w-3.5 h-3.5" />}
         {label}
       </span>
       <span className={cn(
-        'text-sm text-slate-200',
-        mono && 'font-mono bg-slate-800/50 px-2 py-0.5 rounded text-xs'
+        'text-sm text-gray-700',
+        mono && 'font-mono bg-gray-50 px-2 py-0.5 rounded text-xs border border-gray-100'
       )}>
         {value || '-'}
       </span>
@@ -76,12 +76,12 @@ export default function Settings() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-lg font-semibold text-white">系统设置</h2>
-          <p className="text-sm text-slate-400">查看系统配置和运行状态</p>
+          <h2 className="text-lg font-semibold text-gray-900">系统设置</h2>
+          <p className="text-sm text-gray-500">查看系统配置和运行状态</p>
         </div>
         <button
           onClick={refetch}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm transition-colors"
+          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white hover:bg-gray-50 text-gray-600 text-sm transition-colors border border-gray-200 shadow-sm"
         >
           <RefreshCw className="w-4 h-4" />
           刷新
@@ -92,7 +92,7 @@ export default function Settings() {
         <div className="flex items-center justify-center py-20">
           <div className="flex flex-col items-center gap-3">
             <div className="w-8 h-8 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
-            <span className="text-sm text-slate-400">加载系统信息...</span>
+            <span className="text-sm text-gray-400">加载系统信息...</span>
           </div>
         </div>
       ) : (
@@ -109,14 +109,14 @@ export default function Settings() {
           {/* Environment */}
           <SectionCard icon={Shield} title="环境配置" color="emerald">
             {Object.keys(env).length === 0 ? (
-              <div className="text-sm text-slate-500 py-2">无可显示的环境变量</div>
+              <div className="text-sm text-gray-400 py-2">无可显示的环境变量</div>
             ) : (
               Object.entries(env).map(([key, value]) => (
                 <InfoRow key={key} label={key} value={value} mono />
               ))
             )}
-            <div className="pt-2 border-t border-slate-800/50">
-              <p className="text-xs text-slate-600 flex items-center gap-1">
+            <div className="pt-2 border-t border-gray-100">
+              <p className="text-xs text-gray-400 flex items-center gap-1">
                 <Shield className="w-3 h-3" />
                 敏感信息 (Token / Key / Password) 已隐藏
               </p>
@@ -131,7 +131,7 @@ export default function Settings() {
             <InfoRow icon={HardDrive} label="磁盘已用" value={`${storage.disk?.usedGB || 0} GB (${storage.disk?.usedPercent || 0}%)`} />
             {storage.disk?.usedPercent > 0 && (
               <div className="pt-2">
-                <div className="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
+                <div className="w-full h-2 rounded-full bg-gray-100 overflow-hidden">
                   <div
                     className={cn(
                       'h-full rounded-full transition-all duration-500',
@@ -156,7 +156,7 @@ export default function Settings() {
                 <span className="flex items-center gap-2">
                   <span className={cn(
                     'w-2 h-2 rounded-full',
-                    services.online > 0 ? 'bg-emerald-400' : 'bg-slate-500'
+                    services.online > 0 ? 'bg-emerald-500' : 'bg-gray-300'
                   )} />
                   {`${services.online || 0} / ${services.total || 0}`}
                 </span>
@@ -164,13 +164,13 @@ export default function Settings() {
             />
             {services.total > 0 && (
               <div className="pt-2">
-                <div className="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
+                <div className="w-full h-2 rounded-full bg-gray-100 overflow-hidden">
                   <div
                     className="h-full rounded-full bg-emerald-500 transition-all duration-500"
                     style={{ width: `${services.total > 0 ? (services.online / services.total) * 100 : 0}%` }}
                   />
                 </div>
-                <p className="text-xs text-slate-500 mt-1.5 text-right">
+                <p className="text-xs text-gray-400 mt-1.5 text-right">
                   {services.total > 0 ? Math.round((services.online / services.total) * 100) : 0}% 在线率
                 </p>
               </div>
@@ -180,8 +180,8 @@ export default function Settings() {
       )}
 
       {/* Footer note */}
-      <div className="rounded-xl border border-slate-800/50 bg-slate-900/50 px-6 py-4">
-        <div className="flex items-center gap-2 text-xs text-slate-500">
+      <div className="rounded-xl border border-gray-200 bg-white shadow-sm px-6 py-4">
+        <div className="flex items-center gap-2 text-xs text-gray-400">
           <SettingsIcon className="w-3.5 h-3.5" />
           <span>系统设置为只读模式，如需修改请通过命令行操作。数据每 30 秒自动刷新。</span>
         </div>

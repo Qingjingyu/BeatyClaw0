@@ -17,11 +17,11 @@ import {
 
 function StatusBadge({ status }) {
   const config = {
-    pending: { color: 'bg-indigo-500/10 text-indigo-400', icon: Clock, label: '等待中' },
-    running: { color: 'bg-emerald-500/10 text-emerald-400', icon: Play, label: '运行中' },
-    paused: { color: 'bg-amber-500/10 text-amber-400', icon: Pause, label: '已暂停' },
-    completed: { color: 'bg-slate-700/50 text-slate-400', icon: CheckCircle2, label: '已完成' },
-    failed: { color: 'bg-red-500/10 text-red-400', icon: AlertCircle, label: '失败' },
+    pending: { color: 'bg-indigo-50 text-indigo-600', icon: Clock, label: '等待中' },
+    running: { color: 'bg-emerald-50 text-emerald-600', icon: Play, label: '运行中' },
+    paused: { color: 'bg-amber-50 text-amber-600', icon: Pause, label: '已暂停' },
+    completed: { color: 'bg-gray-100 text-gray-500', icon: CheckCircle2, label: '已完成' },
+    failed: { color: 'bg-red-50 text-red-600', icon: AlertCircle, label: '失败' },
   }
   const c = config[status] || config.pending
   const Icon = c.icon
@@ -36,9 +36,9 @@ function StatusBadge({ status }) {
 
 function TypeBadge({ type }) {
   const config = {
-    'one-time': { color: 'bg-violet-500/10 text-violet-400 border-violet-500/20', icon: Timer, label: '一次性' },
-    recurring: { color: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20', icon: Repeat, label: '周期性' },
-    interval: { color: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20', icon: RefreshCw, label: '间隔' },
+    'one-time': { color: 'bg-violet-50 text-violet-600 border-violet-200', icon: Timer, label: '一次性' },
+    recurring: { color: 'bg-indigo-50 text-indigo-600 border-indigo-200', icon: Repeat, label: '周期性' },
+    interval: { color: 'bg-cyan-50 text-cyan-600 border-cyan-200', icon: RefreshCw, label: '间隔' },
   }
   const c = config[type] || config['one-time']
   const Icon = c.icon
@@ -53,9 +53,9 @@ function TypeBadge({ type }) {
 
 function PriorityIndicator({ priority }) {
   const config = {
-    1: { color: 'text-red-400', label: '紧急' },
-    2: { color: 'text-amber-400', label: '高' },
-    3: { color: 'text-slate-400', label: '普通' },
+    1: { color: 'text-red-500', label: '紧急' },
+    2: { color: 'text-amber-500', label: '高' },
+    3: { color: 'text-gray-400', label: '普通' },
   }
   const c = config[priority] || config[3]
 
@@ -104,14 +104,14 @@ export default function Tasks() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-lg font-semibold text-white">任务调度</h2>
-          <p className="text-sm text-slate-400">
+          <h2 className="text-lg font-semibold text-gray-900">任务调度</h2>
+          <p className="text-sm text-gray-500">
             {tasks.length} 个任务 &middot; {runningCount} 运行中 &middot; {pendingCount} 等待中 &middot; {pausedCount} 已暂停
           </p>
         </div>
         <button
           onClick={refetch}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm transition-colors"
+          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white hover:bg-gray-50 text-gray-600 text-sm transition-colors border border-gray-200 shadow-sm"
         >
           <RefreshCw className="w-4 h-4" />
           刷新
@@ -120,43 +120,49 @@ export default function Tasks() {
 
       {/* Stats cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="rounded-xl border bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 border-emerald-500/20 p-5">
-          <div className="flex items-center gap-2 text-slate-400 text-sm">
-            <Play className="w-4 h-4" />
+        <div className="rounded-xl border bg-white shadow-sm border-gray-200 p-5">
+          <div className="flex items-center gap-2 text-gray-500 text-sm">
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-emerald-50">
+              <Play className="w-4 h-4 text-emerald-500" />
+            </div>
             <span>运行中</span>
           </div>
           <div className="mt-3">
-            <span className="text-2xl font-bold text-white">{runningCount}</span>
+            <span className="text-2xl font-bold text-gray-900">{runningCount}</span>
           </div>
         </div>
-        <div className="rounded-xl border bg-gradient-to-br from-indigo-500/10 to-indigo-500/5 border-indigo-500/20 p-5">
-          <div className="flex items-center gap-2 text-slate-400 text-sm">
-            <Clock className="w-4 h-4" />
+        <div className="rounded-xl border bg-white shadow-sm border-gray-200 p-5">
+          <div className="flex items-center gap-2 text-gray-500 text-sm">
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-indigo-50">
+              <Clock className="w-4 h-4 text-indigo-500" />
+            </div>
             <span>等待中</span>
           </div>
           <div className="mt-3">
-            <span className="text-2xl font-bold text-white">{pendingCount}</span>
+            <span className="text-2xl font-bold text-gray-900">{pendingCount}</span>
           </div>
         </div>
-        <div className="rounded-xl border bg-gradient-to-br from-amber-500/10 to-amber-500/5 border-amber-500/20 p-5">
-          <div className="flex items-center gap-2 text-slate-400 text-sm">
-            <Pause className="w-4 h-4" />
+        <div className="rounded-xl border bg-white shadow-sm border-gray-200 p-5">
+          <div className="flex items-center gap-2 text-gray-500 text-sm">
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-amber-50">
+              <Pause className="w-4 h-4 text-amber-500" />
+            </div>
             <span>已暂停</span>
           </div>
           <div className="mt-3">
-            <span className="text-2xl font-bold text-white">{pausedCount}</span>
+            <span className="text-2xl font-bold text-gray-900">{pausedCount}</span>
           </div>
         </div>
       </div>
 
       {/* Tasks table */}
-      <div className="rounded-xl border border-slate-800/50 bg-slate-900/50 overflow-hidden">
-        <div className="px-6 py-4 border-b border-slate-800/50 flex items-center justify-between">
-          <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-            <CalendarClock className="w-4 h-4 text-indigo-400" />
+      <div className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+        <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+          <h3 className="text-sm font-semibold text-gray-900 flex items-center gap-2">
+            <CalendarClock className="w-4 h-4 text-indigo-500" />
             任务列表
           </h3>
-          <span className="text-xs text-slate-500 flex items-center gap-1">
+          <span className="text-xs text-gray-400 flex items-center gap-1">
             <Clock className="w-3 h-3" />
             每 15 秒刷新
           </span>
@@ -164,7 +170,7 @@ export default function Tasks() {
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="text-xs text-slate-500 uppercase tracking-wider">
+              <tr className="text-xs text-gray-400 uppercase tracking-wider bg-gray-50">
                 <th className="text-left py-3 px-4 font-medium">ID</th>
                 <th className="text-left py-3 px-4 font-medium">名称 / 提示</th>
                 <th className="text-left py-3 px-4 font-medium">类型</th>
@@ -178,7 +184,7 @@ export default function Tasks() {
             <tbody>
               {loading && tasks.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="py-12 text-center text-slate-500">
+                  <td colSpan={8} className="py-12 text-center text-gray-400">
                     <div className="flex flex-col items-center gap-2">
                       <div className="w-6 h-6 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
                       <span className="text-sm">加载中...</span>
@@ -187,27 +193,27 @@ export default function Tasks() {
                 </tr>
               ) : tasks.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="py-12 text-center text-slate-500">
+                  <td colSpan={8} className="py-12 text-center text-gray-400">
                     <div className="flex flex-col items-center gap-3">
-                      <CalendarDays className="w-8 h-8 text-slate-600" />
+                      <CalendarDays className="w-8 h-8 text-gray-300" />
                       <span className="text-sm">暂无调度任务</span>
                     </div>
                   </td>
                 </tr>
               ) : (
                 tasks.map(task => (
-                  <tr key={task.id} className="border-b border-slate-800/50 hover:bg-slate-800/20 transition-colors">
+                  <tr key={task.id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
                     <td className="py-3 px-4">
-                      <span className="text-xs font-mono text-slate-400 bg-slate-800/50 px-2 py-0.5 rounded">
+                      <span className="text-xs font-mono text-gray-500 bg-gray-50 px-2 py-0.5 rounded border border-gray-100">
                         {task.id?.substring(0, 14) || '-'}
                       </span>
                     </td>
                     <td className="py-3 px-4">
                       <div>
-                        <div className="text-sm font-medium text-white">
+                        <div className="text-sm font-medium text-gray-900">
                           {task.name || '(未命名)'}
                         </div>
-                        <div className="text-xs text-slate-500 mt-0.5 max-w-[300px] truncate">
+                        <div className="text-xs text-gray-400 mt-0.5 max-w-[300px] truncate">
                           {task.prompt}
                         </div>
                       </div>
@@ -216,7 +222,7 @@ export default function Tasks() {
                       <TypeBadge type={task.type} />
                     </td>
                     <td className="py-3 px-4">
-                      <span className="text-xs font-mono text-slate-300">
+                      <span className="text-xs font-mono text-gray-600">
                         {task.cron_expression || (task.interval_seconds ? `每${formatDuration(task.interval_seconds * 1000)}` : '-')}
                       </span>
                     </td>
@@ -226,10 +232,10 @@ export default function Tasks() {
                     <td className="py-3 px-4">
                       <StatusBadge status={task.status} />
                     </td>
-                    <td className="py-3 px-4 text-sm text-slate-400">
+                    <td className="py-3 px-4 text-sm text-gray-400">
                       {formatTimestamp(task.last_run_at)}
                     </td>
-                    <td className="py-3 px-4 text-sm text-slate-300">
+                    <td className="py-3 px-4 text-sm text-gray-600">
                       {task.status === 'completed' ? '已完成' : formatTimestamp(task.next_run_at)}
                     </td>
                   </tr>
@@ -241,17 +247,17 @@ export default function Tasks() {
       </div>
 
       {/* History */}
-      <div className="rounded-xl border border-slate-800/50 bg-slate-900/50 overflow-hidden">
-        <div className="px-6 py-4 border-b border-slate-800/50">
-          <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-            <History className="w-4 h-4 text-indigo-400" />
+      <div className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+        <div className="px-6 py-4 border-b border-gray-100">
+          <h3 className="text-sm font-semibold text-gray-900 flex items-center gap-2">
+            <History className="w-4 h-4 text-indigo-500" />
             执行历史
           </h3>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="text-xs text-slate-500 uppercase tracking-wider">
+              <tr className="text-xs text-gray-400 uppercase tracking-wider bg-gray-50">
                 <th className="text-left py-3 px-4 font-medium">时间</th>
                 <th className="text-left py-3 px-4 font-medium">任务</th>
                 <th className="text-left py-3 px-4 font-medium">状态</th>
@@ -261,27 +267,27 @@ export default function Tasks() {
             <tbody>
               {history.length === 0 ? (
                 <tr>
-                  <td colSpan={4} className="py-8 text-center text-slate-500 text-sm">
+                  <td colSpan={4} className="py-8 text-center text-gray-400 text-sm">
                     暂无执行记录
                   </td>
                 </tr>
               ) : (
                 history.map((h, i) => (
-                  <tr key={h.id || i} className="border-b border-slate-800/50 hover:bg-slate-800/20 transition-colors">
-                    <td className="py-3 px-4 text-sm text-slate-400">
+                  <tr key={h.id || i} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                    <td className="py-3 px-4 text-sm text-gray-400">
                       {formatTimestamp(h.executed_at)}
                     </td>
                     <td className="py-3 px-4">
-                      <div className="text-sm text-white">{h.task_name || '-'}</div>
-                      <div className="text-xs text-slate-500 max-w-[300px] truncate">{h.prompt}</div>
+                      <div className="text-sm text-gray-900">{h.task_name || '-'}</div>
+                      <div className="text-xs text-gray-400 max-w-[300px] truncate">{h.prompt}</div>
                     </td>
                     <td className="py-3 px-4">
                       <span className={cn(
                         'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium',
-                        h.status === 'success' ? 'bg-emerald-500/10 text-emerald-400' :
-                        h.status === 'failed' ? 'bg-red-500/10 text-red-400' :
-                        h.status === 'timeout' ? 'bg-amber-500/10 text-amber-400' :
-                        'bg-slate-700/50 text-slate-400'
+                        h.status === 'success' ? 'bg-emerald-50 text-emerald-600' :
+                        h.status === 'failed' ? 'bg-red-50 text-red-600' :
+                        h.status === 'timeout' ? 'bg-amber-50 text-amber-600' :
+                        'bg-gray-100 text-gray-500'
                       )}>
                         {h.status === 'success' ? <CheckCircle2 className="w-3 h-3" /> :
                          h.status === 'failed' ? <AlertCircle className="w-3 h-3" /> :
@@ -292,7 +298,7 @@ export default function Tasks() {
                          h.status === 'started' ? '执行中' : h.status}
                       </span>
                     </td>
-                    <td className="py-3 px-4 text-sm text-slate-400">
+                    <td className="py-3 px-4 text-sm text-gray-400">
                       {formatDuration(h.duration_ms)}
                     </td>
                   </tr>

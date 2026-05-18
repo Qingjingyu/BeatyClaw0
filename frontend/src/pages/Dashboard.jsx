@@ -30,32 +30,41 @@ import { useState, useEffect } from 'react'
 
 function StatCard({ icon: Icon, label, value, sub, color = 'indigo', trend }) {
   const colorMap = {
-    indigo: 'from-indigo-500/10 to-indigo-500/5 border-indigo-500/20 text-indigo-400',
-    emerald: 'from-emerald-500/10 to-emerald-500/5 border-emerald-500/20 text-emerald-400',
-    amber: 'from-amber-500/10 to-amber-500/5 border-amber-500/20 text-amber-400',
-    violet: 'from-violet-500/10 to-violet-500/5 border-violet-500/20 text-violet-400',
+    indigo: 'bg-white border-gray-200 shadow-sm',
+    emerald: 'bg-white border-gray-200 shadow-sm',
+    amber: 'bg-white border-gray-200 shadow-sm',
+    violet: 'bg-white border-gray-200 shadow-sm',
+  }
+
+  const iconColorMap = {
+    indigo: 'text-indigo-500 bg-indigo-50',
+    emerald: 'text-emerald-500 bg-emerald-50',
+    amber: 'text-amber-500 bg-amber-50',
+    violet: 'text-violet-500 bg-violet-50',
   }
 
   return (
     <div className={cn(
-      'rounded-xl border bg-gradient-to-br p-5 transition-all duration-300 hover:scale-[1.02]',
+      'rounded-xl border p-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-md',
       colorMap[color]
     )}>
       <div className="flex items-start justify-between">
-        <div className="flex items-center gap-2 text-slate-400 text-sm">
-          <Icon className="w-4 h-4" />
+        <div className="flex items-center gap-2 text-gray-500 text-sm">
+          <div className={cn('w-8 h-8 rounded-lg flex items-center justify-center', iconColorMap[color])}>
+            <Icon className="w-4 h-4" />
+          </div>
           <span>{label}</span>
         </div>
         {trend && (
-          <span className="flex items-center gap-0.5 text-xs text-emerald-400">
+          <span className="flex items-center gap-0.5 text-xs text-emerald-500">
             <ArrowUpRight className="w-3 h-3" />
             {trend}
           </span>
         )}
       </div>
       <div className="mt-3">
-        <span className="text-2xl font-bold text-white">{value}</span>
-        {sub && <span className="ml-2 text-sm text-slate-400">{sub}</span>}
+        <span className="text-2xl font-bold text-gray-900">{value}</span>
+        {sub && <span className="ml-2 text-sm text-gray-400">{sub}</span>}
       </div>
     </div>
   )
@@ -63,23 +72,23 @@ function StatCard({ icon: Icon, label, value, sub, color = 'indigo', trend }) {
 
 function ServiceRow({ name, status, cpu, mem, uptime, pid }) {
   const statusConfig = {
-    online: { icon: CheckCircle2, color: 'text-emerald-400', bg: 'bg-emerald-400/10', label: '运行中' },
-    stopped: { icon: XCircle, color: 'text-red-400', bg: 'bg-red-400/10', label: '已停止' },
-    errored: { icon: AlertCircle, color: 'text-amber-400', bg: 'bg-amber-400/10', label: '异常' },
+    online: { icon: CheckCircle2, color: 'text-emerald-600', bg: 'bg-emerald-50', label: '运行中' },
+    stopped: { icon: XCircle, color: 'text-red-500', bg: 'bg-red-50', label: '已停止' },
+    errored: { icon: AlertCircle, color: 'text-amber-500', bg: 'bg-amber-50', label: '异常' },
   }
   const config = statusConfig[status] || statusConfig.stopped
   const StatusIcon = config.icon
 
   return (
-    <tr className="border-b border-slate-800/50 hover:bg-slate-800/20 transition-colors">
+    <tr className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
       <td className="py-3 px-4">
         <div className="flex items-center gap-3">
           <div className={cn('w-8 h-8 rounded-lg flex items-center justify-center', config.bg)}>
             <Server className={cn('w-4 h-4', config.color)} />
           </div>
           <div>
-            <div className="text-sm font-medium text-white">{name}</div>
-            <div className="text-xs text-slate-500">PID: {pid || '-'}</div>
+            <div className="text-sm font-medium text-gray-900">{name}</div>
+            <div className="text-xs text-gray-400">PID: {pid || '-'}</div>
           </div>
         </div>
       </td>
@@ -92,9 +101,9 @@ function ServiceRow({ name, status, cpu, mem, uptime, pid }) {
           {config.label}
         </span>
       </td>
-      <td className="py-3 px-4 text-sm text-slate-300">{cpu || '0'}%</td>
-      <td className="py-3 px-4 text-sm text-slate-300">{mem || '0'} MB</td>
-      <td className="py-3 px-4 text-sm text-slate-400">{uptime || '-'}</td>
+      <td className="py-3 px-4 text-sm text-gray-600">{cpu || '0'}%</td>
+      <td className="py-3 px-4 text-sm text-gray-600">{mem || '0'} MB</td>
+      <td className="py-3 px-4 text-sm text-gray-400">{uptime || '-'}</td>
     </tr>
   )
 }
@@ -130,15 +139,15 @@ function UsageGauge({ value, label, color, max = 100 }) {
               strokeWidth={0}
             >
               <Cell fill={fillColor} />
-              <Cell fill="#1e293b" />
+              <Cell fill="#e2e8f0" />
             </Pie>
           </PieChart>
         </ResponsiveContainer>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-lg font-bold text-white">{Math.round(pct)}%</span>
+          <span className="text-lg font-bold text-gray-900">{Math.round(pct)}%</span>
         </div>
       </div>
-      <span className="mt-2 text-sm text-slate-400">{label}</span>
+      <span className="mt-2 text-sm text-gray-500">{label}</span>
     </div>
   )
 }
@@ -215,9 +224,9 @@ export default function Dashboard() {
       {/* Resource gauges + Chart */}
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
         {/* Gauges */}
-        <div className="rounded-xl border border-slate-800/50 bg-slate-900/50 p-6">
-          <h3 className="text-sm font-semibold text-white flex items-center gap-2 mb-6">
-            <BarChart3 className="w-4 h-4 text-indigo-400" />
+        <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-6">
+          <h3 className="text-sm font-semibold text-gray-900 flex items-center gap-2 mb-6">
+            <BarChart3 className="w-4 h-4 text-indigo-500" />
             资源概览
           </h3>
           <div className="flex justify-around">
@@ -228,9 +237,9 @@ export default function Dashboard() {
         </div>
 
         {/* Trend chart */}
-        <div className="xl:col-span-2 rounded-xl border border-slate-800/50 bg-slate-900/50 p-6">
-          <h3 className="text-sm font-semibold text-white flex items-center gap-2 mb-4">
-            <Activity className="w-4 h-4 text-indigo-400" />
+        <div className="xl:col-span-2 rounded-xl border border-gray-200 bg-white shadow-sm p-6">
+          <h3 className="text-sm font-semibold text-gray-900 flex items-center gap-2 mb-4">
+            <Activity className="w-4 h-4 text-indigo-500" />
             资源趋势
           </h3>
           {cpuHistory.length > 1 ? (
@@ -238,27 +247,27 @@ export default function Dashboard() {
               <AreaChart data={cpuHistory}>
                 <defs>
                   <linearGradient id="cpuGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#6366f1" stopOpacity={0.3} />
+                    <stop offset="0%" stopColor="#6366f1" stopOpacity={0.15} />
                     <stop offset="100%" stopColor="#6366f1" stopOpacity={0} />
                   </linearGradient>
                   <linearGradient id="memGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#10b981" stopOpacity={0.3} />
+                    <stop offset="0%" stopColor="#10b981" stopOpacity={0.15} />
                     <stop offset="100%" stopColor="#10b981" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                <XAxis dataKey="time" tick={{ fill: '#64748b', fontSize: 11 }} axisLine={false} tickLine={false} />
-                <YAxis domain={[0, 100]} tick={{ fill: '#64748b', fontSize: 11 }} axisLine={false} tickLine={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                <XAxis dataKey="time" tick={{ fill: '#94a3b8', fontSize: 11 }} axisLine={false} tickLine={false} />
+                <YAxis domain={[0, 100]} tick={{ fill: '#94a3b8', fontSize: 11 }} axisLine={false} tickLine={false} />
                 <Tooltip
-                  contentStyle={{ background: '#0f172a', border: '1px solid #1e293b', borderRadius: '8px', color: '#e2e8f0' }}
-                  labelStyle={{ color: '#94a3b8' }}
+                  contentStyle={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '8px', color: '#334155', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}
+                  labelStyle={{ color: '#64748b' }}
                 />
                 <Area type="monotone" dataKey="cpu" name="CPU %" stroke="#6366f1" fill="url(#cpuGrad)" strokeWidth={2} />
                 <Area type="monotone" dataKey="mem" name="内存 %" stroke="#10b981" fill="url(#memGrad)" strokeWidth={2} />
               </AreaChart>
             </ResponsiveContainer>
           ) : (
-            <div className="h-[200px] flex items-center justify-center text-slate-500 text-sm">
+            <div className="h-[200px] flex items-center justify-center text-gray-400 text-sm">
               正在收集数据...
             </div>
           )}
@@ -266,13 +275,13 @@ export default function Dashboard() {
       </div>
 
       {/* Services table */}
-      <div className="rounded-xl border border-slate-800/50 bg-slate-900/50 overflow-hidden">
-        <div className="px-6 py-4 border-b border-slate-800/50 flex items-center justify-between">
-          <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-            <Server className="w-4 h-4 text-indigo-400" />
+      <div className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+        <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+          <h3 className="text-sm font-semibold text-gray-900 flex items-center gap-2">
+            <Server className="w-4 h-4 text-indigo-500" />
             服务列表
           </h3>
-          <span className="text-xs text-slate-500 flex items-center gap-1">
+          <span className="text-xs text-gray-400 flex items-center gap-1">
             <Clock className="w-3 h-3" />
             每 10 秒刷新
           </span>
@@ -280,7 +289,7 @@ export default function Dashboard() {
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="text-xs text-slate-500 uppercase tracking-wider">
+              <tr className="text-xs text-gray-400 uppercase tracking-wider bg-gray-50">
                 <th className="text-left py-3 px-4 font-medium">服务</th>
                 <th className="text-left py-3 px-4 font-medium">状态</th>
                 <th className="text-left py-3 px-4 font-medium">CPU</th>
@@ -291,7 +300,7 @@ export default function Dashboard() {
             <tbody>
               {loading && services.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="py-12 text-center text-slate-500">
+                  <td colSpan={5} className="py-12 text-center text-gray-400">
                     <div className="flex flex-col items-center gap-2">
                       <div className="w-6 h-6 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
                       <span className="text-sm">加载中...</span>
@@ -300,7 +309,7 @@ export default function Dashboard() {
                 </tr>
               ) : services.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="py-12 text-center text-slate-500 text-sm">
+                  <td colSpan={5} className="py-12 text-center text-gray-400 text-sm">
                     无法获取服务状态
                   </td>
                 </tr>
@@ -324,8 +333,8 @@ export default function Dashboard() {
 
       {/* System info footer */}
       {system && (
-        <div className="rounded-xl border border-slate-800/50 bg-slate-900/50 px-6 py-4">
-          <div className="flex flex-wrap gap-x-8 gap-y-2 text-xs text-slate-500">
+        <div className="rounded-xl border border-gray-200 bg-white shadow-sm px-6 py-4">
+          <div className="flex flex-wrap gap-x-8 gap-y-2 text-xs text-gray-400">
             <span>主机名: {system.hostname || '-'}</span>
             <span>系统: {system.platform || '-'}</span>
             <span>运行时间: {system.uptime || '-'}</span>
